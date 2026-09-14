@@ -6,7 +6,8 @@ import { AppShell } from "../components/AppShell";
 import { YouTubeSync } from "../components/YouTubeSync";
 import { Exercises } from "../components/Exercises";
 import { findLanguage } from "../lib/languages";
-import { speak, stopSpeaking, warmVoices, speechSupported } from "../lib/speech";
+import { speak, speakSequence, stopSpeaking, warmVoices } from "../lib/speech";
+import { VoiceSettings } from "../components/VoiceSettings";
 import { WordLookup } from "../components/WordLookup";
 import { Id } from "../../convex/_generated/dataModel";
 
@@ -113,6 +114,7 @@ export function LessonView() {
   const [error, setError] = useState("");
   const [triggered, setTriggered] = useState(false);
   const recoveryAttemptedAt = useRef(0);
+  const [playingIdx, setPlayingIdx] = useState(-1);
 
   useEffect(() => {
     warmVoices();
@@ -522,27 +524,34 @@ export function LessonView() {
           {/* Reading tab */}
           {tab === "reading" && (
             <div className="card-panel p-5 sm:p-6">
-              <div className="no-print mb-4 flex items-center gap-3">
+              <div className="no-print mb-4 flex flex-wrap items-center gap-3">
                 <button
                   className="btn-primary"
-                  onClick={() => speak(fullText, langCode, 0.85)}
+                  onClick={() =>
+                    void speakSequence(
+                      allSentences.map((s) => s.target),
+                      langCode,
+                      0.9,
+                      setPlayingIdx,
+                    )
+                  }
                 >
                   ▶ Ouvir tudo
                 </button>
                 <button className="btn-secondary" onClick={stopSpeaking}>
                   ⏸ Parar
                 </button>
-                {!speechSupported() && (
-                  <span className="text-xs text-terracotta-600">
-                    Seu navegador não suporta síntese de voz.
-                  </span>
-                )}
+                <div className="min-w-[220px] flex-1">
+                  <VoiceSettings langCode={langCode} />
+                </div>
               </div>
               <div className="space-y-3">
                 {allSentences.map((s, i) => (
                   <p
                     key={i}
-                    className="cursor-pointer rounded-lg px-2 py-1 transition hover:bg-paper-100"
+                    className={`cursor-pointer rounded-lg px-2 py-1 transition hover:bg-paper-100 ${
+                      playingIdx === i ? "bg-terracotta-50 ring-1 ring-terracotta-400" : ""
+                    }`}
                     onClick={() => speak(s.target, langCode)}
                   >
                     <span className="mr-2 font-mono text-xs text-ink-400">{i + 1}</span>

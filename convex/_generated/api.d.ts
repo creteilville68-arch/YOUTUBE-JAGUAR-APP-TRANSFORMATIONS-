@@ -20,6 +20,7 @@ import type * as profiles from "../profiles.js";
 import type * as srs from "../srs.js";
 import type * as streak from "../streak.js";
 import type * as textSplit from "../textSplit.js";
+import type * as tts from "../tts.js";
 import type * as vocab from "../vocab.js";
 import type * as youtube from "../youtube.js";
 
@@ -42,6 +43,7 @@ declare const fullApi: ApiFromModules<{
   srs: typeof srs;
   streak: typeof streak;
   textSplit: typeof textSplit;
+  tts: typeof tts;
   vocab: typeof vocab;
   youtube: typeof youtube;
 }>;
