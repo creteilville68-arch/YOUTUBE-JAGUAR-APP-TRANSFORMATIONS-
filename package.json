@@ -1,0 +1,34 @@
+{
+  "name": "lingua-viva",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0 --port ${PORT:-5173}",
+    "dev:stack": "sh ./scripts/start-dev.sh",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "typecheck": "tsc -b --noEmit",
+    "convex:dev": "convex dev --once"
+  },
+  "dependencies": {
+    "@convex-dev/auth": "^0.0.95",
+    "@vitejs/plugin-react": "^4.3.2",
+    "autoprefixer": "^10.4.20",
+    "convex": "^1.17.0",
+    "framer-motion": "^11.11.0",
+    "postcss": "^8.4.47",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.2",
+    "tailwindcss": "^3.4.13",
+    "vite": "^5.4.8",
+    "youtube-transcript": "^1.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.0",
+    "@types/react": "^18.3.10",
+    "@types/react-dom": "^18.3.0",
+    "typescript": "^5.6.2"
+  }
+}
